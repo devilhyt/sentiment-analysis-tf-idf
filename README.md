@@ -3,3 +3,4 @@
 2. Open terminal and run "python .\classifier.py happy hate sad".
 3. You can type "-str" or "-url" to switch modes.  
    (str mode: for text, url mode: for ptt article url)
+4. Type -exit to quit.
