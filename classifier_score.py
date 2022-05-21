@@ -20,18 +20,18 @@ if __name__ == "__main__":
     train_combine_dicts = []
     train_order_list = []
 
-    sore_num = int(input('請輸入訓練篇數: '))
-    train_num = int(input('請輸入測試篇數: '))
+    train_num = int(input('請輸入訓練篇數: '))
+    score_num = int(input('請輸入測試篇數: '))
     for order, board in enumerate(board_list):  # 合成看板 dict_list 以及建立order_list
         with open('./data/' + board + ".pickle", 'rb') as pkl:
             tmp_list = pickle.load(pkl)
-            score_order_list += [order]*train_num
-            score_combine_dicts += tmp_list[0:train_num]
-            del tmp_list[0:train_num]
+            score_order_list += [order]*score_num
+            score_combine_dicts += tmp_list[0:score_num]
+            del tmp_list[0:score_num]
 
-            train_order_list += [order]*sore_num
-            train_combine_dicts += tmp_list[0:sore_num]
-            del tmp_list[0:sore_num]
+            train_order_list += [order]*train_num
+            train_combine_dicts += tmp_list[0:train_num]
+            del tmp_list[0:train_num]
 
     conv_DV = DictVectorizer()
     calc_Tfidf = TfidfTransformer()
