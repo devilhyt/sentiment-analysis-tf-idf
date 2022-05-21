@@ -31,34 +31,52 @@ if __name__ == "__main__":
     board_list = [name for name in sys.argv[1:]]
 
     # ======合成看板 dict_list、建立order_list======
-    combine_dicts = []
-    order_list = []
-    for order, board in enumerate(board_list):
+    score_combine_dicts = []
+    score_order_list = []
+    train_combine_dicts = []
+    train_order_list = []
+
+    train_num = int(input('請輸入訓練篇數: '))
+    score_num = int(input('請輸入測試篇數: '))
+    for order, board in enumerate(board_list):  # 合成看板 dict_list 以及建立order_list
         with open('./data/' + board + ".pickle", 'rb') as pkl:
             tmp_list = pickle.load(pkl)
-            combine_dicts += tmp_list
-            order_list += [order]*len(tmp_list)
+            score_order_list += [order]*score_num
+            score_combine_dicts += tmp_list[0:score_num]
+            del tmp_list[0:score_num]
+
+            train_order_list += [order]*train_num
+            train_combine_dicts += tmp_list[0:train_num]
+            del tmp_list[0:train_num]
 
     # ======轉為Vector、Tfidf======
     conv_DV = DictVectorizer()
     calc_Tfidf = TfidfTransformer()
-    DictVect = conv_DV.fit_transform(combine_dicts)
+    DictVect = conv_DV.fit_transform(train_combine_dicts)
     Tfidf_DV = calc_Tfidf.fit_transform(DictVect)
+
+    score_DictVect = conv_DV.transform(score_combine_dicts)
+    score_Tfidf_DV = calc_Tfidf.transform(score_DictVect)
 
     # ======訓練模型======
     L_SVC = LinearSVC(C=0.27)
-    L_SVC.fit(Tfidf_DV, order_list)
+    L_SVC.fit(Tfidf_DV, train_order_list)
 
+    # ======預測======
+    L_SVC_result = L_SVC.score(X=score_Tfidf_DV, y=score_order_list)
+    print('\nLinearSVC    準確度：'+str(round(L_SVC_result*100, 2))+'%')
+
+    # ======輸入功能======
     mode = 0
     dp_str = ['PTT文章網址', '文字']
     while True:
         url = input('情緒分析，請輸入' + dp_str[mode] + '：\n')
         print()
-        if url == '-exit':
+        if url == '/exit':
             sys.exit()
-        elif url == '-str':
+        elif url == '/str':
             mode = 1
-        elif url == '-url':
+        elif url == '/url':
             mode = 0
         else:
             article_classifier(L_SVC, conv_DV, calc_Tfidf, url, mode)
