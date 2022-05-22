@@ -74,7 +74,7 @@ if __name__ == "__main__":
         cnt = 0
         board = input("請輸入看板名稱: ")
         r = session.get(PTT_URL + "/bbs/" + board + "/index.html")
-        if board == '-exit':
+        if board == '/exit':
             sys.exit()
         elif (r.status_code == requests.codes.ok):
             soup = BeautifulSoup(r.text, "html.parser")

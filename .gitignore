@@ -196,3 +196,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+ckip_data/
+test*.py
