@@ -7,21 +7,18 @@ if __name__ == "__main__" and len(sys.argv) <= 1:
 
 #===================================================
 
-from ckiptagger import WS
-import tensorflow as tf
-from tensorflow.python.util import deprecation
 import os
-import pickle
-import string
-from opencc import OpenCC
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
+
 from collections import defaultdict  # 使用 dict 儲存資料
+from opencc import OpenCC
+import string
+import pickle
+from ckiptagger import WS
+
+# ===================================================
 
 print('正在載入ckip model...')
-# ===========Suppress as many warnings as possible============
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
-deprecation._PRINT_DEPRECATION_WARNINGS = False
-tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
-# =============================================================
 ws = WS("./ckip_data")  # Load model without GPU
 print('載入完成！\n')
 

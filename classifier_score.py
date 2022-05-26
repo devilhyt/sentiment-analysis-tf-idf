@@ -39,10 +39,10 @@ if __name__ == "__main__":
     DictVect = conv_DV.fit_transform(train_combine_dicts)
     Tfidf_DV = calc_Tfidf.fit_transform(DictVect)
 
-    score_DictVect = conv_DV.transform(test_combine_dicts)
-    score_Tfidf_DV = calc_Tfidf.transform(score_DictVect)
+    test_DictVect = conv_DV.transform(test_combine_dicts)
+    test_Tfidf_DV = calc_Tfidf.transform(test_DictVect)
 
-    L_SVC = LinearSVC(C=0.27)
+    L_SVC = LinearSVC(C=0.65)
     L_SVC.fit(Tfidf_DV, train_order_list)
-    L_SVC_result = L_SVC.score(X=score_Tfidf_DV, y=test_order_list)
+    L_SVC_result = L_SVC.score(X=test_Tfidf_DV, y=test_order_list)
     print('\nLinearSVC    準確度：'+str(round(L_SVC_result*100, 2))+'%')

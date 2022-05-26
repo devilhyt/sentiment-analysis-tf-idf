@@ -35,26 +35,27 @@ if __name__ == "__main__":
     DictVect = conv_DV.fit_transform(train_combine_dicts)
     Tfidf_DV = calc_Tfidf.fit_transform(DictVect)
 
-    import umap
-    import umap.plot
-    import matplotlib.pyplot as plt
-    from mpl_toolkits.mplot3d import Axes3D
+    # import umap
+    # import umap.plot
+    # import matplotlib.pyplot as plt
+    # from mpl_toolkits.mplot3d import Axes3D
 
     td = Tfidf_DV.todense()
-    train_order_list_np = np.asarray(train_order_list)
+    print(td[0].shape)
+    # train_order_list_np = np.asarray(train_order_list)
 
-    fit = umap.UMAP(n_components=3, n_neighbors=25, min_dist=0.3)
-    u = fit.fit_transform(td)
+    # fit = umap.UMAP(n_components=3, n_neighbors=25, min_dist=0.3)
+    # u = fit.fit_transform(td)
 
-    fig = plt.figure()
-    ax = Axes3D(fig)
-    ax.set_axis_off()
+    # fig = plt.figure()
+    # ax = Axes3D(fig)
+    # ax.set_axis_off()
 
-    color = ["blue", "yellow", "green"]
-    for order, label in enumerate(board_list):
-        arr_start = order*train_num
-        arr_end = (order+1)*train_num
-        ax.scatter(u[arr_start:arr_end, 0], u[arr_start:arr_end, 1], u[arr_start:arr_end,
-                   2], c=color[order], s=8, label=label)
-    ax.legend(loc='upper left')
-    plt.show()
+    # color = ["blue", "yellow", "green"]
+    # for order, label in enumerate(board_list):
+    #     arr_start = order*train_num
+    #     arr_end = (order+1)*train_num
+    #     ax.scatter(u[arr_start:arr_end, 0], u[arr_start:arr_end, 1], u[arr_start:arr_end,
+    #                2], c=color[order], s=8, label=label)
+    # ax.legend(loc='upper left')
+    # plt.show()
